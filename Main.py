@@ -51,10 +51,12 @@ def GetGradientMag(gX: int, gY: int):
     
     return gMag
 
+# cycle through all anchor positions
 for i in range(len(anchor_positions)):
     x = anchor_positions[i][0]
     y = anchor_positions[i][1]
 
+    # get the pixel intensity for each pixel in the 3x3 grid, with the anchor in the center
     top_left = img.getpixel((x-1, y-1))
     top_center = img.getpixel((x, y-1))
     top_right = img.getpixel((x+1, y-1))
@@ -65,6 +67,7 @@ for i in range(len(anchor_positions)):
     bottom_center = img.getpixel((x, y+1))
     bottom_right = img.getpixel((x+1, y+1))
     
+    # convolve the values with the x and y kernel matrices
     xKernelOutputs = xDirKernel(top_left, top_center, top_right,
                                 left, center, right,
                                 bottom_left, bottom_center, bottom_right)
@@ -73,11 +76,15 @@ for i in range(len(anchor_positions)):
                                 left, center, right,
                                 bottom_left, bottom_center, bottom_right)
 
+    # sum the convolved values
     gradientX = SumKernel(xKernelOutputs)
     gradientY = SumKernel(yKernelOutputs)
 
+    # calculate the magnitude of the gradient
     gradientMag = GetGradientMag(gradientX, gradientY)
 
+    # if magnitude is above threshold, means there is a sharp change in pixel intensity... 
+    # means likely to be an outline therefore place a pixel at the anchor position
     if gradientMag > 300:
         sobel_img.putpixel(anchor_positions[i], (0))
 
