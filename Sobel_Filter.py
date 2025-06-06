@@ -2,7 +2,9 @@ from PIL import Image, ImageEnhance, ImageOps
 import numpy as np
 
 img = Image.open("bird.jpg")
-img = ImageEnhance.Contrast(img).enhance(30.0)
+
+
+img = ImageEnhance.Contrast(img).enhance(3.0)
 img = ImageEnhance.Sharpness(img).enhance(2.0)
 
 # Make image greyscale to ensure only pixel intensities are represented
@@ -41,7 +43,7 @@ def yDirKernel(top_left: int, top_center:int, top_right: int,
 
 
 def SumKernel(kernelOutputs: list):
-    return np.sum(kernelOutputs)
+    return int(np.sum(kernelOutputs))
 
 def GetGradientMag(gX: int, gY: int):
     gXsqr = gX * gX
@@ -50,6 +52,12 @@ def GetGradientMag(gX: int, gY: int):
     gMag = np.sqrt(sqrSum)
     
     return gMag
+
+# create list for ASCII script to reference later
+gradientList = []
+
+# create list to store all outline pixels for later
+outlinePositions = []
 
 # cycle through all anchor positions
 for i in range(len(anchor_positions)):
@@ -80,6 +88,8 @@ for i in range(len(anchor_positions)):
     gradientX = SumKernel(xKernelOutputs)
     gradientY = SumKernel(yKernelOutputs)
 
+    
+
     # calculate the magnitude of the gradient
     gradientMag = GetGradientMag(gradientX, gradientY)
 
@@ -87,8 +97,12 @@ for i in range(len(anchor_positions)):
     # means likely to be an outline therefore place a pixel at the anchor position
     if gradientMag > 300:
         sobel_img.putpixel(anchor_positions[i], (0))
+        
+        # store outline pixel positions and their corresponding gradient value for angle calculations later
+        outlinePositions.append(anchor_positions[i])
+        gradientList.append((gradientX, gradientY))
 
-img.show()
-sobel_img.show()
+#img.show()
+#sobel_img.show()
 
 
