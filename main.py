@@ -5,11 +5,10 @@ from tkinter import filedialog
 from PIL import Image, ImageEnhance, ImageOps, ImageTk
 import os
 
-# Scripts
+# Script(s)
 import Sobel_Filter as sf
 
-size = (300, 300)
-global sobelImg
+
 
 def import_file():
     global preview
@@ -78,12 +77,15 @@ def generateSobelImg():
 def ExportImg():
     try:
         dirname = os.path.dirname(__file__)
-        filename = str(dirname + "/outputs/" + "sobel_image.png")
+        filename = str(dirname + "/output/" + "sobel_image.png")
         sobelImg.save(filename)
         print("succcessfully exported!")
     except:
         tk.messagebox.showerror(title="Error", message="No image uploaded")
     
+
+global sobelImg
+global preview
 
 root = tk.Tk()
 root.geometry("600x440+400+250")  # Width 600, Height 400, at x=400, y=250
@@ -102,7 +104,8 @@ y_cordinate = int((screen_height/2) - (window_height/2))
 
 root.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
 
-global preview
+
+size = (300, 300)
 im =  ImageOps.fit(Image.open("preview.png"), size)
 preview = ImageTk.PhotoImage(im)
 image_label = tk.Label(root, image=[preview])
