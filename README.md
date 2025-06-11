@@ -24,7 +24,6 @@ For ease of use, the program includes a simple GUI for applying the filter to yo
 
 ## 🚀 Quickstart 
 
-## 📘 Getting Started 
 > This project was built on Python (ver. 3.13) using Pillow (ver. 11.2.1) and Tkinter (ver. 0.1.0), hence these versions are recommended to ensure the program functions as intended.
 
 ### Prerequisites
