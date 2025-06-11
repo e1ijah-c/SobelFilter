@@ -1,7 +1,6 @@
 from PIL import Image, ImageEnhance, ImageOps
 import numpy as np
 
-
 def getImg(file_path: str):
     img = Image.open(file_path)
     return img
