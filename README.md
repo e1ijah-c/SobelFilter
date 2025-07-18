@@ -76,5 +76,5 @@ git remote -v
 ## ☎️ Contact
 
 **Email:** elijahchia255@gmail.com\
-**Project Link:** https://github.com/e1ijah-c/Img2ASCII
+**Project Link:** https://github.com/e1ijah-c/SobelFilter.git
 
